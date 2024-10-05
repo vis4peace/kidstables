@@ -1,0 +1,29 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f0f8ff;
+    color: #333;
+}
+nav {
+    margin: 20px;
+}
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border-radius: 5px;
+}
+nav a:hover {
+    background-color: #45a049;
+}
+button {
+    padding: 10px;
+    margin: 10px;
+    font-size: 1.2em;
+}
+#timer, #score {
+    font-size: 1.5em;
+    margin-top: 20px;
+}

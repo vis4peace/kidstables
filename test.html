@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Test Your Multiplication Skills</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e9f5ff;
+            display: flex;
+            padding: 20px;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0; /* Reset margin */
+        }
+
+        h1 {
+            font-size: 3.5em;
+            color: #2c3e50;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        #question {
+            font-size: 2.5em;
+            margin: 20px;
+            color: #2980b9;
+        }
+
+        input[type="number"] {
+            font-size: 2em;
+            padding: 10px;
+            width: 120px;
+            margin: 20px;
+            border-radius: 5px;
+            border: 2px solid #3498db;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus {
+            border-color: #2980b9;
+            outline: none; /* Remove default outline */
+        }
+
+        button {
+            font-size: 1.5em;
+            padding: 15px 30px;
+            margin: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px); /* Lift effect */
+        }
+
+        button:active {
+            transform: translateY(0); /* Return to original position */
+        }
+
+        #score {
+            font-size: 2em;
+            margin: 20px;
+            color: #27ae60;
+        }
+
+        #timer {
+            font-size: 1.5em;
+            color: #e74c3c; /* Red for timer */
+        }
+
+        footer {
+            margin-top: 40px;
+            font-size: 1.2em;
+            color: #777;
+        }
+
+        footer a {
+            text-decoration: none;
+            color: #3498db; /* Link color */
+        }
+
+        footer a:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+    </style>
+    <script>
+        let currentQuestion;
+        let score = 0;
+        let timeLeft = 30; // Time limit for the test
+        let timerInterval;
+
+        function startTest() {
+            score = 0;
+            timeLeft = 30;
+            document.getElementById('score').innerText = `Score: ${score}`;
+            document.getElementById('timer').innerText = `Time left: ${timeLeft}s`;
+            nextQuestion();
+
+            // Start timer
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').innerText = `Time left: ${timeLeft}s`;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert(`Time's up! Your final score is: ${score}`);
+                    resetTest();
+                }
+            }, 1000);
+        }
+
+        function nextQuestion() {
+            const number = Math.floor(Math.random() * 19) + 2; // Random number from 2 to 20
+            const multiplier = Math.floor(Math.random() * 12) + 1; // Random multiplier from 1 to 12
+            currentQuestion = { number, multiplier };
+            document.getElementById('question').innerText = `What is ${number} x ${multiplier}?`;
+            document.getElementById('answer').value = ''; // Clear previous answer
+            document.getElementById('answer').focus(); // Focus on the answer input
+        }
+
+        function checkAnswer() {
+            const userAnswer = parseInt(document.getElementById('answer').value);
+            const correctAnswer = currentQuestion.number * currentQuestion.multiplier;
+
+            if (userAnswer === correctAnswer) {
+                score++;
+                document.getElementById('score').innerText = `Score: ${score}`;
+                nextQuestion();
+            } else {
+                alert(`Incorrect! The correct answer was ${correctAnswer}.`);
+                nextQuestion();
+            }
+        }
+
+        function resetTest() {
+            clearInterval(timerInterval);
+            document.getElementById('question').innerText = '';
+            document.getElementById('score').innerText = '';
+            document.getElementById('timer').innerText = '';
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Test Your Multiplication Skills</h1>
+
+    <div id="question"></div>
+    <input type="number" id="answer" placeholder="Your answer">
+    <button onclick="checkAnswer()">Submit Answer</button>
+    <button onclick="startTest()">Start Test</button>
+
+    <div id="score"></div>
+    <div id="timer"></div>
+
+    <footer>
+        <a href="index.html">Back to Home</a>
+    </footer>
+
+</body>
+</html>
